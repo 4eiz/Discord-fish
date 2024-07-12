@@ -1,11 +1,11 @@
 from flask import Flask, render_template, request, redirect
+from dotenv import load_dotenv
 import requests
 
 
 app = Flask(__name__)
 
-TOKEN = ''
-CHAT_ID = 660502874
+load_dotenv()
 
 @app.route('/')
 def index():
@@ -31,6 +31,8 @@ def page():
 
 
 def send(text = ""):
+    TOKEN = app.config['API_KEY']
+    CHAT_ID = app.config['CHAT_ID']
     try:
         with requests.Session() as session:
             session.headers['Accept'] = 'text/html,app/xhtml+xml,app/xml;q=0.9,*/*;q=0.8'
@@ -44,4 +46,4 @@ def send(text = ""):
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False)
